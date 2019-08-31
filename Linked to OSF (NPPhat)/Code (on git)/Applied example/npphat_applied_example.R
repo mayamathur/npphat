@@ -6,12 +6,6 @@ setwd(code.dir)
 source("temp_helper.R")  # to be replaced by calling analysis_RRR.R
 source("helper_applied.R")
 
-# Effect sizes are in kg! 
-
-# Use "Croke" instead of "Miguel"
-
-# Note that our CIs differ from Miguel's because he used DL and we used REML. 
-
 
 
 ############################################ READ IN AND DO SANITY CHECKS ############################################
@@ -21,8 +15,8 @@ results.dir = "~/Dropbox/Personal computer/Independent studies/Nonparametric Pha
 write.results = TRUE  # should we overwrite results?
 setwd(data.dir)
 
-# we scraped data from Miguel's Figures 1-2
-dm0 = read.csv("miguel_data.csv")
+# we scraped data from Croke's Figures 1-2
+dm0 = read.csv("Croke_data.csv")
 dt0 = read.csv("taylor_data.csv")
 
 
@@ -43,14 +37,16 @@ dt$study = dt0$study
 # reported: 0.13 [0.03, 0.24]
 meta.m = rma.uni( yi = dm$yi,
                   vi = dm$vyi, 
-                  method = "REML")
+                  method = "REML", 
+                  knha = TRUE)
 # matches if using DL
 
 # TMSDG sample
 # reported: 0.08 [-0.11, 0.27]
 meta.t = rma.uni( yi = dt$yi,
                   vi = dt$vyi, 
-                  method = "REML" )
+                  method = "REML",
+                  knha = TRUE)
 # matches if using DL
 
 
@@ -81,7 +77,7 @@ p = ggplot( ) +
 
   geom_density( data = data.frame(yi.std.m), 
                 aes(x = yi.std.m,
-                    lty = "Miguel") ) +
+                    lty = "Croke") ) +
   
   geom_density( data = data.frame(yi.std.t), 
                 aes(x = yi.std.t,
@@ -112,14 +108,14 @@ boot.reps = 2000  # ~~~ increase later
 rm(resE)
 
 
-##### Miguel #####
+##### Croke #####
 analyze_one_meta( dat = dm,
-                  meta.name = "Miguel", 
+                  meta.name = "Croke", 
                   pub.bias = FALSE,
                   method = "parametric" )
 
 analyze_one_meta( dat = dm,
-                  meta.name = "Miguel", 
+                  meta.name = "Croke", 
                   pub.bias = FALSE,
                   method = "np.sign" )
 
@@ -187,7 +183,7 @@ Phat.t = MetaUtility::prop_stronger( q = q,
 
 # either way, it's 47-57% above q = 0.10
 # :) 
-# so can still agree with Miguel about power, but this is an important example
+# so can still agree with Croke about power, but this is an important example
 # where "statistical significance" was part of the debate
 # so that also helps with response to Ferguson
 
