@@ -22,6 +22,7 @@ dt0 = read.csv("taylor_data.csv")
 
 library(metafor)
 library(MetaUtility)
+library(boot)
 
 dm = scrape_meta( type = "raw", 
                   est = dm0$est,
@@ -93,7 +94,7 @@ p = ggplot( ) +
   theme_classic()
 
 plot(p)
-# 500 x 380
+# 7 x 5
 
 
 
@@ -105,10 +106,11 @@ plot(p)
 pub.bias = FALSE
 ql = as.list( c( 0, .1, .2, 0.5, -0.1, -0.2 ) )
 boot.reps = 2000  # ~~~ increase later
-rm(resE)
+if( exists("resE") ) rm(resE)
 
 
 ##### Croke #####
+# bm
 analyze_one_meta( dat = dm,
                   meta.name = "Croke", 
                   pub.bias = FALSE,
@@ -117,7 +119,7 @@ analyze_one_meta( dat = dm,
 analyze_one_meta( dat = dm,
                   meta.name = "Croke", 
                   pub.bias = FALSE,
-                  method = "np.sign" )
+                  method = "calibrated" )
 
 ##### TMSDG #####
 analyze_one_meta( dat = dt,
@@ -128,7 +130,7 @@ analyze_one_meta( dat = dt,
 analyze_one_meta( dat = dt,
                   meta.name = "Taylor-Robinson", 
                   pub.bias = FALSE,
-                  method = "np.sign" )
+                  method = "calibrated" )
 
 View(resE)
 

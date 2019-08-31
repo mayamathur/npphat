@@ -123,8 +123,54 @@ analyze_one_meta = function( dat,
                                         return.vectors = FALSE ) } )
   }
   
+  if (method == "calibrated") {
   
+    Phat.l = lapply( ql,
+                     FUN = function(q) {
+                       
+                       ens = my_ens( yi = dat$yi, 
+                                     sei = sqrt(dat$vyi) )
+                       
+                       # set tail based on sign of q
+                       if (q >= 0) tail = "above"
+                       else tail = "below"
+                       if ( tail == "above" ) Phat.NP.ens = sum(ens > c(q)) / length(ens)
+                       if ( tail == "below" ) Phat.NP.ens = sum(ens < c(q)) / length(ens)
+                       
+                       Note = NA
+                       tryCatch({
+                         boot.res.ens = boot( data = dat, 
+                                              parallel = "multicore",
+                                              R = boot.reps, 
+                                              statistic = function(original, indices) {
+                                                
+                                                b = original[indices,]
+                                                
+                                                ens.b = my_ens( yi = b$yi, 
+                                                                sei = sqrt(b$vyi) )
+                                                if ( tail == "above" ) return( sum(ens.b > c(q)) / length(ens.b) )
+                                                if ( tail == "below" ) return( sum(ens.b < c(q)) / length(ens.b) )
+                                              }
+                         )
+                         
+                         bootCIs.ens = boot.ci(boot.res.ens, type="bca")
+                         boot.lo.ens = bootCIs.ens$bca[4]
+                         boot.hi.ens = bootCIs.ens$bca[5]
+                         
+                       }, error = function(err){
+                         boot.lo.ens <<- NA
+                         boot.hi.ens <<- NA
+                         Note <<- err$message
+                       } )  # end tryCatch
+                       
+                       return( data.frame( Est = Phat.NP.ens,
+                                           lo = boot.lo.ens,
+                                           hi = boot.hi.ens,
+                                           boot.note = Note ) )
+                  } )  # end lapply
 
+  } # end calibrated method
+  
   
   Phat.df = do.call( rbind, 
                      Phat.l )
