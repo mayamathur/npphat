@@ -1,22 +1,22 @@
 % latex table generated in R 3.6.0 by xtable 1.8-4 package
-% Fri Aug 23 17:54:04 2019
+% Sat Aug 31 07:54:16 2019
 \begin{table}[ht]
 \centering
 \begin{tabular}{rllll}
   \hline
  & 1 & 2 & 3 & 4 \\ 
   \hline
-Meta & Miguel & Miguel & TMSDG & TMSDG \\ 
+Meta & Croke & Croke & Taylor-Robinson & Taylor-Robinson \\ 
   k & 22 & 22 & 11 & 11 \\ 
-  Method & parametric & np.sign & parametric & np.sign \\ 
   Est & 0.13 [-0.01, 0.28] & 0.13 [-0.01, 0.28] & 0.08 [-0.15, 0.31] & 0.08 [-0.15, 0.31] \\ 
   Tau & 0.28 [0.13, 0.38] & 0.28 [0.13, 0.38] & 0.35 [0.00, 0.51] & 0.35 [0.00, 0.51] \\ 
-  Percent above 0 & 68 [49, 87] & 77 [55, 92] & 59 [33, 85] & 60 [26, 90] \\ 
-  Percent above 0.1 & 54 [34, 75] & 48 [26, 71] & 48 [21, 74] & 35 [11, 68] \\ 
-  Percent above 0.2 & 40 [20, 61] & 27 [11, 49] & 36 [11, 62] & 21 [4, 52] \\ 
-  Percent above 0.5 & 10 [0, 37] & 12 [3, 30] & 11 [0, 48] & 9 [0, 36] \\ 
-  Percent below -0.1 & 21 [3, 38] & 15 [4, 34] & 30 [5, 55] & 22 [4, 51] \\ 
-  Percent below -0.2 & 12 [0, 27] & 12 [3, 29] & 21 [0, 44] & 16 [2, 44] \\ 
+  Method & parametric & calibrated & parametric & calibrated \\ 
+  Percent above 0 & 68 [49, 87] & 82 [41, 91] & 59 [33, 85] & 73 [0, 100] \\ 
+  Percent above 0.1 & 54 [34, 75] & 50 [14, 68] & 48 [21, 74] & 45 [0, 82] \\ 
+  Percent above 0.2 & 40 [20, 61] & 23 [0, 41] & 36 [11, 62] & 18 [0, 55] \\ 
+  Percent above 0.5 & 10 [0, 35] & 9 [0, 23] & 11 [0, 58] & 9 [0, 27] \\ 
+  Percent below -0.1 & 21 [3, 38] & 14 [0, 27] & 30 [5, 55] & 18 [0, 36] \\ 
+  Percent below -0.2 & 12 [0, 29] & 14 [0, 36] & 21 [0, 44] & 18 [0, 45] \\ 
    \hline
 \end{tabular}
 \end{table}

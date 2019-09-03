@@ -7,7 +7,6 @@ source("temp_helper.R")  # to be replaced by calling analysis_RRR.R
 source("helper_applied.R")
 
 
-
 ############################################ READ IN AND DO SANITY CHECKS ############################################
 
 data.dir = "~/Dropbox/Personal computer/Independent studies/Nonparametric Phat (NPPhat)/Linked to OSF (NPPhat)/Applied example data"
@@ -222,3 +221,23 @@ PhatNP.t = prop_stronger_np(q = q,
 # NP CI width is actually better
 # point estimates of 34% vs. 48% (parametric is higher)
 PhatNP.t$res; Phat.t
+
+
+#### ~~ TEMP ONLY
+
+boot.res.ens = boot( data = dt, 
+                     parallel = "multicore",
+                     R = boot.reps, 
+                     statistic = function(original, indices) {
+                       
+                       b = original[indices,]
+                       
+                       ens.b = my_ens( yi = b$yi, 
+                                       sei = sqrt(b$vyi) )
+                       return( sum(ens.b > 0) / length(ens.b) )
+                     }
+)
+
+bootCIs.ens = boot.ci(boot.res.ens, type="bca")
+boot.lo.ens = bootCIs.ens$bca[4]
+boot.hi.ens = bootCIs.ens$bca[5]
